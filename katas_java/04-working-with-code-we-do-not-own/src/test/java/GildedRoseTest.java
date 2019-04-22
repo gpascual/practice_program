@@ -63,4 +63,16 @@ public class GildedRoseTest {
     int expectedQuality = 0;
     assertThat(product.getQuality(), is(expectedQuality));
   }
+
+  @Test
+  public void given_a_product_whose_quality_is_50_when_a_day_passes_then_its_quality_doesnt_increase_anymore() {
+    Inventory inventory = new Inventory();
+    Product product = askForAgedBrie(2, 50);
+    inventory.addProduct(product);
+
+    inventory.updateQualities();
+
+    int expectedQuality = 50;
+    assertThat(product.getQuality(), is(expectedQuality));
+  }
 }
