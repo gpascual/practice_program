@@ -1,9 +1,9 @@
 package Products;
 
 public class AgedBrie extends Product {
-  private static final String AGED_BRIE_PRODUCT_NAME = "Aged Brie";
+  static final String AGED_BRIE_PRODUCT_NAME = "Aged Brie";
 
-  public AgedBrie(int sellIn, int initialQuality) {
+  AgedBrie(int sellIn, int initialQuality) {
     super(AGED_BRIE_PRODUCT_NAME, sellIn, initialQuality);
   }
 
