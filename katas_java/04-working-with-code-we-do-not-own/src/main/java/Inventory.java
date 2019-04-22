@@ -6,8 +6,8 @@ import java.util.Objects;
 public class Inventory {
   private ArrayList<Item> items;
 
-  public Inventory(ArrayList<Item> items) {
-    this.items = items;
+  public Inventory() {
+    this.items = new ArrayList<>();
   }
 
   @Override
@@ -28,5 +28,9 @@ public class Inventory {
       --item.sellIn;
       --item.quality;
     }
+  }
+
+  public void addItem(Item item) {
+    items.add(item);
   }
 }
