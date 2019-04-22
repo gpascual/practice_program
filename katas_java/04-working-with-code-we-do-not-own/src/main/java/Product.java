@@ -20,6 +20,11 @@ public class Product {
   public void updateQuality() {
     --item.sellIn;
 
+    if (Objects.equals(item.name, "Aged Brie")) {
+      ++item.quality;
+      return;
+    }
+
     if (item.sellIn < 0) {
       item.quality -= 2;
     } else {

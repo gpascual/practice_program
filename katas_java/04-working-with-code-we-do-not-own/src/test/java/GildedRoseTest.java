@@ -31,4 +31,18 @@ public class GildedRoseTest {
     assertThat(product.getSellIn(), is(expectedSellIn));
     assertThat(product.getQuality(), is(expectedQuality));
   }
+
+  @Test
+  public void given_aged_brie_when_a_day_passes_then_quality_increases() {
+    Inventory inventory = new Inventory();
+    Product product = new Product("Aged Brie", 20, 20);
+    inventory.addProduct(product);
+
+    inventory.updateQualities();
+
+    int expectedSellIn = 19;
+    int expectedQuality = 21;
+    assertThat(product.getSellIn(), is(expectedSellIn));
+    assertThat(product.getQuality(), is(expectedQuality));
+  }
 }
