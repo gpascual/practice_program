@@ -1,4 +1,3 @@
-import items.Item;
 import org.junit.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -10,8 +9,6 @@ public class GildedRoseTest {
     Inventory inventory = new Inventory();
     Product product = new Product("fromage", 20, 20);
     inventory.addProduct(product);
-    Item item = new Item("fromage", 20, 20);
-    inventory.addItem(item);
 
     inventory.updateQualities();
 
@@ -19,8 +16,6 @@ public class GildedRoseTest {
     int expectedQuality = 19;
     assertThat(product.getSellIn(), is(expectedSellIn));
     assertThat(product.getQuality(), is(expectedQuality));
-    assertThat(item.sellIn, is(expectedSellIn));
-    assertThat(item.quality, is(expectedQuality));
   }
 
   @Test
@@ -28,8 +23,6 @@ public class GildedRoseTest {
     Inventory inventory = new Inventory();
     Product product = new Product("fromage", -2, 20);
     inventory.addProduct(product);
-    Item item = new Item("fromage", -2, 20);
-    inventory.addItem(item);
 
     inventory.updateQualities();
 
@@ -37,7 +30,5 @@ public class GildedRoseTest {
     int expectedQuality = 18;
     assertThat(product.getSellIn(), is(expectedSellIn));
     assertThat(product.getQuality(), is(expectedQuality));
-    assertThat(item.sellIn, is(expectedSellIn));
-    assertThat(item.quality, is(expectedQuality));
   }
 }

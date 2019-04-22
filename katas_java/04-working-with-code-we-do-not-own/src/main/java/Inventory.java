@@ -1,14 +1,10 @@
-import items.Item;
-
 import java.util.ArrayList;
 import java.util.Objects;
 
 public class Inventory {
-  private ArrayList<Item> items;
   private ArrayList<Product> products;
 
   public Inventory() {
-    this.items = new ArrayList<>();
     products = new ArrayList<>();
   }
 
@@ -16,19 +12,6 @@ public class Inventory {
     for (Product product : products) {
       product.updateQuality();
     }
-    for (Item item : items) {
-      --item.sellIn;
-
-      if (item.sellIn < 0) {
-        item.quality -= 2;
-      } else {
-        --item.quality;
-      }
-    }
-  }
-
-  public void addItem(Item item) {
-    items.add(item);
   }
 
   public void addProduct(Product product) {
