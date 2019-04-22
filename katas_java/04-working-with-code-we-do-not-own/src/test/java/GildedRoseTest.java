@@ -7,7 +7,7 @@ import static Products.ProductSupplier.askForAgedBrie;
 
 public class GildedRoseTest {
   @Test
-  public void given_an_item_when_sell_in_approaches_then_quality_decreases() {
+  public void given_an_product_when_sell_in_approaches_then_quality_decreases() {
     Inventory inventory = new Inventory();
     Product product = askFor("fromage", 20, 20);
     inventory.addProduct(product);
@@ -21,7 +21,7 @@ public class GildedRoseTest {
   }
 
   @Test
-  public void given_an_item_with_passed_sell_in_when_a_day_passes_then_quality_decreases_2x_faster() {
+  public void given_an_product_with_passed_sell_in_when_a_day_passes_then_quality_decreases_2x_faster() {
     Inventory inventory = new Inventory();
     Product product = askFor("fromage", -2, 20);
     inventory.addProduct(product);
