@@ -1,5 +1,4 @@
 import org.junit.Test;
-
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import Products.Product;
@@ -51,5 +50,17 @@ public class GildedRoseTest {
     assertThat(product.getQuality(), is(expectedQuality));
     assertThat(otherBrie.getSellIn(), is(expectedSellIn));
     assertThat(otherBrie.getQuality(), is(expectedQuality));
+  }
+
+  @Test
+  public void given_a_product_without_any_quality_left_when_a_day_passes_then_its_quality_remains_zero() {
+    Inventory inventory = new Inventory();
+    Product product = askFor("fromage", 2, 0);
+    inventory.addProduct(product);
+
+    inventory.updateQualities();
+
+    int expectedQuality = 0;
+    assertThat(product.getQuality(), is(expectedQuality));
   }
 }

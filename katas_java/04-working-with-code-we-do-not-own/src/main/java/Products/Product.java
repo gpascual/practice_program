@@ -26,6 +26,8 @@ public class Product {
     } else {
       --item.quality;
     }
+
+    item.quality = Math.max(0, item.quality);
   }
 
   @Override
