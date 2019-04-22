@@ -4,6 +4,8 @@ import java.util.Objects;
 import items.Item;
 
 public class Product {
+  private static final int MINIMUM_QUALITY = 0;
+
   protected final Item item;
 
   Product(String name, int sellIn, int initialQuality) {
@@ -27,7 +29,7 @@ public class Product {
       --item.quality;
     }
 
-    item.quality = Math.max(0, item.quality);
+    item.quality = Math.max(MINIMUM_QUALITY, item.quality);
   }
 
   @Override
