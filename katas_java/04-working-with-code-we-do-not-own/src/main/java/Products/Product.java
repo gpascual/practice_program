@@ -10,17 +10,6 @@ public class Product {
     item = new Item(name, sellIn, initialQuality);
   }
 
-  public static Product create(String name, int sellIn, int initialQuality) {
-    if (Objects.equals(name, AgedBrie.AGED_BRIE_PRODUCT_NAME)) {
-      return new AgedBrie(sellIn, initialQuality);
-    }
-    return new Product(name, sellIn, initialQuality);
-  }
-
-  public static Product createAgedBrie(int sellIn, int initialQuality) {
-    return new AgedBrie(sellIn, initialQuality);
-  }
-
   public int getSellIn() {
     return item.sellIn;
   }

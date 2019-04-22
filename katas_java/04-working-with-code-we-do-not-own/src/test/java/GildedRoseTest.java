@@ -1,13 +1,16 @@
 import org.junit.Test;
+
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import Products.Product;
+import static Products.ProductSupplier.askFor;
+import static Products.ProductSupplier.askForAgedBrie;
 
 public class GildedRoseTest {
   @Test
   public void given_an_item_when_sell_in_approaches_then_quality_decreases() {
     Inventory inventory = new Inventory();
-    Product product = Product.create("fromage", 20, 20);
+    Product product = askFor("fromage", 20, 20);
     inventory.addProduct(product);
 
     inventory.updateQualities();
@@ -21,7 +24,7 @@ public class GildedRoseTest {
   @Test
   public void given_an_item_with_passed_sell_in_when_a_day_passes_then_quality_decreases_2x_faster() {
     Inventory inventory = new Inventory();
-    Product product = Product.create("fromage", -2, 20);
+    Product product = askFor("fromage", -2, 20);
     inventory.addProduct(product);
 
     inventory.updateQualities();
@@ -35,8 +38,8 @@ public class GildedRoseTest {
   @Test
   public void given_aged_brie_when_a_day_passes_then_quality_increases() {
     Inventory inventory = new Inventory();
-    Product product = Product.createAgedBrie(20, 20);
-    Product otherBrie = Product.create("Aged Brie", 20, 20);
+    Product product = askForAgedBrie(20, 20);
+    Product otherBrie = askFor("Aged Brie", 20, 20);
     inventory.addProduct(product);
     inventory.addProduct(otherBrie);
 
