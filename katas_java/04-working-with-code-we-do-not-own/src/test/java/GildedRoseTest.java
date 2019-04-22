@@ -1,7 +1,8 @@
+import Products.AgedBrie;
 import org.junit.Test;
-
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
+import Products.Product;
 
 public class GildedRoseTest {
   @Test
@@ -35,7 +36,7 @@ public class GildedRoseTest {
   @Test
   public void given_aged_brie_when_a_day_passes_then_quality_increases() {
     Inventory inventory = new Inventory();
-    Product product = new Product("Aged Brie", 20, 20);
+    Product product = new AgedBrie(20, 20);
     inventory.addProduct(product);
 
     inventory.updateQualities();

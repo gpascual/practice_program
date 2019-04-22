@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Objects;
+import Products.Product;
 
 public class Inventory {
   private ArrayList<Product> products;

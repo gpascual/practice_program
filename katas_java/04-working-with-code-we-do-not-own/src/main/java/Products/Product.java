@@ -1,9 +1,10 @@
-import items.Item;
+package Products;
 
 import java.util.Objects;
+import items.Item;
 
 public class Product {
-  private final Item item;
+  protected final Item item;
 
   public Product(String name, int sellIn, int initialQuality) {
     item = new Item(name, sellIn, initialQuality);
@@ -19,11 +20,6 @@ public class Product {
 
   public void updateQuality() {
     --item.sellIn;
-
-    if (Objects.equals(item.name, "Aged Brie")) {
-      ++item.quality;
-      return;
-    }
 
     if (item.sellIn < 0) {
       item.quality -= 2;
