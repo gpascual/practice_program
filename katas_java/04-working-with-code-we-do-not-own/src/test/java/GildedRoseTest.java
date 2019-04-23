@@ -162,4 +162,20 @@ public class GildedRoseTest {
     Integer missedPassesExpectedQuality = 0;
     assertThat(missedBackstagePasses.getQuality(), is(missedPassesExpectedQuality));
   }
+
+  @Test
+  public void given_a_conjured_product_when_a_day_passes_then_its_quality_decreases_2x_faster() {
+    Inventory inventory = new Inventory();
+    Product product = ProductSupplier.askForConjured(20, 20);
+    Product otherConjuredProduct = askFor("Conjured", 0, 20);
+    inventory.addProduct(product);
+    inventory.addProduct(otherConjuredProduct);
+
+    inventory.updateProducts();
+
+    int expectedQuality = 18;
+    int otherExpectedQuality = 16;
+    assertThat(product.getQuality(), is(expectedQuality));
+    assertThat(otherConjuredProduct.getQuality(), is(otherExpectedQuality));
+  }
 }
