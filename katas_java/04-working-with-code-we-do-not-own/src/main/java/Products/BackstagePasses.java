@@ -7,6 +7,10 @@ class BackstagePasses extends IncreasingQualityProduct {
 
   @Override
   public void updateQuality() {
+    if (item.sellIn < 0) {
+      item.quality = 0;
+      return;
+    }
     if (item.sellIn <= 5) {
       increaseQuality(3);
       return;

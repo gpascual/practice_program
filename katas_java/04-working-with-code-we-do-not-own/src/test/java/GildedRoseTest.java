@@ -150,4 +150,16 @@ public class GildedRoseTest {
     assertThat(product.getQuality(), is(expectedQuality));
     assertThat(otherBackstagePasses.getQuality(), is(expectedQuality));
   }
+
+  @Test
+  public void given_backstage_passes_when_there_sell_in_has_passed_then_the_quality_is_0() {
+    Inventory inventory = new Inventory();
+    Product missedBackstagePasses = askForBackstagePasses(0, 20);
+    inventory.addProduct(missedBackstagePasses);
+
+    inventory.updateProducts();
+
+    Integer missedPassesExpectedQuality = 0;
+    assertThat(missedBackstagePasses.getQuality(), is(missedPassesExpectedQuality));
+  }
 }

@@ -1,7 +1,7 @@
 package Products;
 
 class IncreasingQualityProduct extends Product {
-  protected static final int MAXIMUM_QUALITY = 50;
+  private static final int MAXIMUM_QUALITY = 50;
 
   IncreasingQualityProduct(String name, int sellIn, int initialQuality) {
     super(name, sellIn, initialQuality);
