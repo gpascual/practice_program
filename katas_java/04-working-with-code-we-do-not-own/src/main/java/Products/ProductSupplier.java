@@ -8,7 +8,7 @@ public class ProductSupplier {
   public static Product askFor(String name, int sellIn, int initialQuality) {
     switch (name) {
       case AGED_BRIE_PRODUCT_NAME:
-        return new AgedBrie(AGED_BRIE_PRODUCT_NAME, sellIn, initialQuality);
+        return new IncreasingQualityProduct(AGED_BRIE_PRODUCT_NAME, sellIn, initialQuality);
       case SULFURAS_PRODUCT_NAME:
         return new Legendary(SULFURAS_PRODUCT_NAME);
       case BACKSTAGE_PASSES_PRODUCT_NAME:
@@ -19,7 +19,7 @@ public class ProductSupplier {
   }
 
   public static Product askForAgedBrie(int sellIn, int initialQuality) {
-    return new AgedBrie(AGED_BRIE_PRODUCT_NAME, sellIn, initialQuality);
+    return new IncreasingQualityProduct(AGED_BRIE_PRODUCT_NAME, sellIn, initialQuality);
   }
 
   public static Product askForSulfuras() {
