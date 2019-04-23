@@ -9,7 +9,7 @@ class BackstagePasses extends AgedBrie {
   public void updateQuality() {
     if (item.sellIn <= 10) {
       item.quality +=2;
-      item.quality = Math.min(MAXIMUM_QUALITY, item.quality);
+      item.quality = applyMaximumQualityBoundary(item.quality);
       return;
     }
 

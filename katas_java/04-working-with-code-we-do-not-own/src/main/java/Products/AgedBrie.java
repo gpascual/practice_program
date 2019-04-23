@@ -11,6 +11,10 @@ class AgedBrie extends Product {
   public void updateQuality() {
     ++item.quality;
 
-    item.quality = Math.min(MAXIMUM_QUALITY, item.quality);
+    item.quality = applyMaximumQualityBoundary(item.quality);
+  }
+
+  protected int applyMaximumQualityBoundary(int quality) {
+    return Math.min(MAXIMUM_QUALITY, quality);
   }
 }
