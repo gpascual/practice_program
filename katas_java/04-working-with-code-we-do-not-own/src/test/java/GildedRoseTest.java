@@ -135,4 +135,19 @@ public class GildedRoseTest {
     assertThat(product.getQuality(), is(expectedQuality));
     assertThat(otherBackstagePasses.getQuality(), is(expectedQuality));
   }
+
+  @Test
+  public void given_backstage_passes_when_there_are_5_or_less_days_to_sell_in_then_the_quality_increases_by_3() {
+    Inventory inventory = new Inventory();
+    Product product = askForBackstagePasses(6, 20);
+    Product otherBackstagePasses = askForBackstagePasses(5, 20);
+    inventory.addProduct(product);
+    inventory.addProduct(otherBackstagePasses);
+
+    inventory.updateProducts();
+
+    Integer expectedQuality = 23;
+    assertThat(product.getQuality(), is(expectedQuality));
+    assertThat(otherBackstagePasses.getQuality(), is(expectedQuality));
+  }
 }

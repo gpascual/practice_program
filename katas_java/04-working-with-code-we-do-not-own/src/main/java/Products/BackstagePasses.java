@@ -7,8 +7,13 @@ class BackstagePasses extends AgedBrie {
 
   @Override
   public void updateQuality() {
+    if (item.sellIn <= 5) {
+      item.quality += 3;
+      item.quality = applyMaximumQualityBoundary(item.quality);
+      return;
+    }
     if (item.sellIn <= 10) {
-      item.quality +=2;
+      item.quality += 2;
       item.quality = applyMaximumQualityBoundary(item.quality);
       return;
     }
