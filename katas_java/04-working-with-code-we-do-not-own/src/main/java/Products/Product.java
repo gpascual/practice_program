@@ -20,9 +20,11 @@ public class Product {
     return item.quality;
   }
 
-  public void updateQuality() {
+  public void updateSellIn() {
     --item.sellIn;
+  }
 
+  public void updateQuality() {
     if (item.sellIn < 0) {
       item.quality -= 2;
     } else {

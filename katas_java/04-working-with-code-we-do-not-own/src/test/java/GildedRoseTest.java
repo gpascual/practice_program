@@ -1,10 +1,8 @@
-import Products.ProductSupplier;
 import org.junit.Test;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import Products.Product;
-import static Products.ProductSupplier.askFor;
-import static Products.ProductSupplier.askForAgedBrie;
+import static Products.ProductSupplier.*;
 
 public class GildedRoseTest {
   @Test
@@ -13,7 +11,7 @@ public class GildedRoseTest {
     Product product = askFor("fromage", 20, 20);
     inventory.addProduct(product);
 
-    inventory.updateQualities();
+    inventory.updateProducts();
 
     int expectedSellIn = 19;
     int expectedQuality = 19;
@@ -27,7 +25,7 @@ public class GildedRoseTest {
     Product product = askFor("fromage", -2, 20);
     inventory.addProduct(product);
 
-    inventory.updateQualities();
+    inventory.updateProducts();
 
     int expectedSellIn = -3;
     int expectedQuality = 18;
@@ -43,7 +41,7 @@ public class GildedRoseTest {
     inventory.addProduct(product);
     inventory.addProduct(otherBrie);
 
-    inventory.updateQualities();
+    inventory.updateProducts();
 
     int expectedSellIn = 19;
     int expectedQuality = 21;
@@ -59,7 +57,7 @@ public class GildedRoseTest {
     Product product = askFor("fromage", 2, 0);
     inventory.addProduct(product);
 
-    inventory.updateQualities();
+    inventory.updateProducts();
 
     int expectedQuality = 0;
     assertThat(product.getQuality(), is(expectedQuality));
@@ -71,7 +69,7 @@ public class GildedRoseTest {
     Product product = askForAgedBrie(2, 50);
     inventory.addProduct(product);
 
-    inventory.updateQualities();
+    inventory.updateProducts();
 
     int expectedQuality = 50;
     assertThat(product.getQuality(), is(expectedQuality));
@@ -80,12 +78,12 @@ public class GildedRoseTest {
   @Test
   public void given_a_legendary_product_when_a_day_passes_then_its_quality_remains_80() {
     Inventory inventory = new Inventory();
-    Product product = ProductSupplier.askForSulfuras(20);
-    Product otherSulfuras = ProductSupplier.askFor("Sulfuras", 20, 20);
+    Product product = askForSulfuras(20);
+    Product otherSulfuras = askFor("Sulfuras", 20, 20);
     inventory.addProduct(product);
     inventory.addProduct(otherSulfuras);
 
-    inventory.updateQualities();
+    inventory.updateProducts();
 
     int expectedQuality = 80;
     assertThat(product.getQuality(), is(expectedQuality));

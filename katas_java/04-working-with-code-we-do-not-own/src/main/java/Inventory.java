@@ -9,8 +9,9 @@ public class Inventory {
     products = new ArrayList<>();
   }
 
-  public void updateQualities() {
+  public void updateProducts() {
     for (Product product : products) {
+      product.updateSellIn();
       product.updateQuality();
     }
   }

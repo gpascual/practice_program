@@ -9,7 +9,6 @@ public class AgedBrie extends Product {
 
   @Override
   public void updateQuality() {
-    --item.sellIn;
     ++item.quality;
 
     item.quality = Math.min(MAXIMUM_QUALITY, item.quality);
