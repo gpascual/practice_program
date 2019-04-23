@@ -120,4 +120,19 @@ public class GildedRoseTest {
     assertThat(otherBackstagePasses.getSellIn(), is(expectedSellIn));
     assertThat(otherBackstagePasses.getQuality(), is(expectedQuality));
   }
+
+  @Test
+  public void given_backstage_passes_when_there_are_10_or_less_days_to_sell_in_then_the_quality_increases_by_2() {
+    Inventory inventory = new Inventory();
+    Product product = askForBackstagePasses(11, 20);
+    Product otherBackstagePasses = askForBackstagePasses(10, 20);
+    inventory.addProduct(product);
+    inventory.addProduct(otherBackstagePasses);
+
+    inventory.updateProducts();
+
+    Integer expectedQuality = 22;
+    assertThat(product.getQuality(), is(expectedQuality));
+    assertThat(otherBackstagePasses.getQuality(), is(expectedQuality));
+  }
 }
