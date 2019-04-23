@@ -1,11 +1,20 @@
-import org.junit.Before;
-import org.junit.Test;
+import com.tngtech.java.junit.dataprovider.DataProvider;
+import com.tngtech.java.junit.dataprovider.DataProviderRunner;
+import com.tngtech.java.junit.dataprovider.UseDataProvider;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 import Products.Product;
+
 import static Products.ProductSupplier.*;
 
+
+@RunWith(DataProviderRunner.class)
 public class GildedRoseTest {
+
+  private static final String DATA_PROVIDER_FORMAT = "%m: %p[0]";
 
   private Inventory inventory;
 
@@ -14,164 +23,58 @@ public class GildedRoseTest {
     inventory = new Inventory();
   }
 
+  @DataProvider(format = DATA_PROVIDER_FORMAT)
+  public static Object[][] test_product_update_data_provider() {
+    return new Object[][] {
+            {"given an product when sell in approaches then quality decreases", askFor("fromage", 20, 20), 19, 19},
+            {"given an product with passed sell in when a day passes then quality decreases 2x faster", askFor("fromage", -2, 20), -3, 18},
+            {"given a product without any quality left when a day passes then its quality remains zero", askFor("fromage", 2, 0), 1, 0},
+            {"given aged brie when a day passes then quality increases", askForAgedBrie(20, 20), 19, 21},
+            {"given aged brie created giving the name when a day passes then quality increases", askFor("Aged Brie", 20, 20), 19, 21},
+            {"given a product whose quality is 50 when a day passes then its quality doesnt increase anymore", askForAgedBrie(2, 50), 1, 50},
+            {"given a legendary product when a day passes then its sell in is null and its quality is always 80", askForSulfuras(), null, 80},
+            {"given a legendary product created giving a name when a day passes then its sell in is null and its quality is always 80", askFor("Sulfuras", 20, 20), null, 80},
+            {"given backstage passes when a day passes then its quality increases", askForBackstagePasses(20, 20), 19, 21},
+            {"given backstage passes created giving the name when a day passes then its quality increases", askFor("Backstage passes", 20, 20), 19, 21},
+            {"given backstage passes when there are 10 days to sell in then the quality increases by 2", askForBackstagePasses(11, 20), 10, 22},
+            {"given backstage passes when there are less than 10 days to sell in then the quality increases by 2", askForBackstagePasses(10, 20), 9, 22},
+            {"given backstage passes when there are 5 days to sell in then the quality increases by 3", askForBackstagePasses(6, 20), 5, 23},
+            {"given backstage passes when there are less than 5 days to sell in then the quality increases by 3", askForBackstagePasses(5, 20), 4, 23},
+            {"given backstage passes when there sell in has passed then the quality is 0", askForBackstagePasses(0, 20), -1, 0},
+            {"given a conjured product when a day passes then its quality decrease by 2", askForConjured(20, 20), 19, 18},
+            {"given a conjured product created giving the name with a passed sell in date when a day passes then its quality decrease by 4", askFor("Conjured", 0, 20), -1, 16}
+    };
+  }
+
   @Test
-  public void given_an_product_when_sell_in_approaches_then_quality_decreases() {
-    Product product = askFor("fromage", 20, 20);
+  @UseDataProvider("test_product_update_data_provider")
+  public void test_product_update(String testDescription, Product product, Integer expectedSellIn, int expectedQuality) {
     inventory.addProduct(product);
 
     inventory.updateProducts();
 
-    int expectedSellIn = 19;
-    int expectedQuality = 19;
     assertThat(product.getSellIn(), is(expectedSellIn));
     assertThat(product.getQuality(), is(expectedQuality));
   }
 
   @Test
-  public void given_an_product_with_passed_sell_in_when_a_day_passes_then_quality_decreases_2x_faster() {
-    Product product = askFor("fromage", -2, 20);
-    inventory.addProduct(product);
+  public void given_a_list_of_products_when_a_day_passes_then_products_are_updated_properly() {
+    Product normal = askFor("fromage", -2, 20);
+    Product agedBrie = askForAgedBrie(2, 50);
+    Product sulfuras = askForSulfuras();
+
+    inventory.addProduct(normal);
+    inventory.addProduct(agedBrie);
+    inventory.addProduct(sulfuras);
+
 
     inventory.updateProducts();
 
-    int expectedSellIn = -3;
-    int expectedQuality = 18;
-    assertThat(product.getSellIn(), is(expectedSellIn));
-    assertThat(product.getQuality(), is(expectedQuality));
-  }
-
-  @Test
-  public void given_aged_brie_when_a_day_passes_then_quality_increases() {
-    Product product = askForAgedBrie(20, 20);
-    Product otherBrie = askFor("Aged Brie", 20, 20);
-    inventory.addProduct(product);
-    inventory.addProduct(otherBrie);
-
-    inventory.updateProducts();
-
-    int expectedSellIn = 19;
-    int expectedQuality = 21;
-    assertThat(product.getSellIn(), is(expectedSellIn));
-    assertThat(product.getQuality(), is(expectedQuality));
-    assertThat(otherBrie.getSellIn(), is(expectedSellIn));
-    assertThat(otherBrie.getQuality(), is(expectedQuality));
-  }
-
-  @Test
-  public void given_a_product_without_any_quality_left_when_a_day_passes_then_its_quality_remains_zero() {
-    Product product = askFor("fromage", 2, 0);
-    inventory.addProduct(product);
-
-    inventory.updateProducts();
-
-    int expectedQuality = 0;
-    assertThat(product.getQuality(), is(expectedQuality));
-  }
-
-  @Test
-  public void given_a_product_whose_quality_is_50_when_a_day_passes_then_its_quality_doesnt_increase_anymore() {
-    Product product = askForAgedBrie(2, 50);
-    inventory.addProduct(product);
-
-    inventory.updateProducts();
-
-    int expectedQuality = 50;
-    assertThat(product.getQuality(), is(expectedQuality));
-  }
-
-  @Test
-  public void given_a_legendary_product_when_a_day_passes_then_its_quality_remains_80() {
-    Product product = askForSulfuras();
-    Product otherSulfuras = askFor("Sulfuras", 20, 20);
-    inventory.addProduct(product);
-    inventory.addProduct(otherSulfuras);
-
-    inventory.updateProducts();
-
-    int expectedQuality = 80;
-    assertThat(product.getQuality(), is(expectedQuality));
-    assertThat(otherSulfuras.getQuality(), is(expectedQuality));
-  }
-
-  @Test
-  public void given_a_legendary_product_when_a_day_passes_then_its_sell_in_is_null() {
-    Product product = askForSulfuras();
-    inventory.addProduct(product);
-
-    inventory.updateProducts();
-
-    Integer expectedSellIn = null;
-    assertThat(product.getSellIn(), is(expectedSellIn));
-  }
-
-  @Test
-  public void given_backstage_passes_when_a_day_passes_then_its_quality_increases() {
-    Product product = askForBackstagePasses(20, 20);
-    Product otherBackstagePasses = askFor("Backstage passes", 20, 20);
-    inventory.addProduct(product);
-    inventory.addProduct(otherBackstagePasses);
-
-    inventory.updateProducts();
-
-    int expectedSellIn = 19;
-    int expectedQuality = 21;
-    assertThat(product.getSellIn(), is(expectedSellIn));
-    assertThat(product.getQuality(), is(expectedQuality));
-    assertThat(otherBackstagePasses.getSellIn(), is(expectedSellIn));
-    assertThat(otherBackstagePasses.getQuality(), is(expectedQuality));
-  }
-
-  @Test
-  public void given_backstage_passes_when_there_are_10_or_less_days_to_sell_in_then_the_quality_increases_by_2() {
-    Product product = askForBackstagePasses(11, 20);
-    Product otherBackstagePasses = askForBackstagePasses(10, 20);
-    inventory.addProduct(product);
-    inventory.addProduct(otherBackstagePasses);
-
-    inventory.updateProducts();
-
-    Integer expectedQuality = 22;
-    assertThat(product.getQuality(), is(expectedQuality));
-    assertThat(otherBackstagePasses.getQuality(), is(expectedQuality));
-  }
-
-  @Test
-  public void given_backstage_passes_when_there_are_5_or_less_days_to_sell_in_then_the_quality_increases_by_3() {
-    Product product = askForBackstagePasses(6, 20);
-    Product otherBackstagePasses = askForBackstagePasses(5, 20);
-    inventory.addProduct(product);
-    inventory.addProduct(otherBackstagePasses);
-
-    inventory.updateProducts();
-
-    Integer expectedQuality = 23;
-    assertThat(product.getQuality(), is(expectedQuality));
-    assertThat(otherBackstagePasses.getQuality(), is(expectedQuality));
-  }
-
-  @Test
-  public void given_backstage_passes_when_there_sell_in_has_passed_then_the_quality_is_0() {
-    Product missedBackstagePasses = askForBackstagePasses(0, 20);
-    inventory.addProduct(missedBackstagePasses);
-
-    inventory.updateProducts();
-
-    Integer missedPassesExpectedQuality = 0;
-    assertThat(missedBackstagePasses.getQuality(), is(missedPassesExpectedQuality));
-  }
-
-  @Test
-  public void given_a_conjured_product_when_a_day_passes_then_its_quality_decreases_2x_faster() {
-    Product product = askForConjured(20, 20);
-    Product otherConjuredProduct = askFor("Conjured", 0, 20);
-    inventory.addProduct(product);
-    inventory.addProduct(otherConjuredProduct);
-
-    inventory.updateProducts();
-
-    int expectedQuality = 18;
-    int otherExpectedQuality = 16;
-    assertThat(product.getQuality(), is(expectedQuality));
-    assertThat(otherConjuredProduct.getQuality(), is(otherExpectedQuality));
+    assertThat(normal.getSellIn(), is(-3));
+    assertThat(normal.getQuality(), is(18));
+    assertThat(agedBrie.getSellIn(), is(1));
+    assertThat(agedBrie.getQuality(), is(50));
+    assertThat(sulfuras.getSellIn(), is(nullValue()));
+    assertThat(sulfuras.getQuality(), is(80));
   }
 }
