@@ -1,3 +1,4 @@
+import Products.ProductSupplier;
 import org.junit.Test;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
@@ -74,5 +75,20 @@ public class GildedRoseTest {
 
     int expectedQuality = 50;
     assertThat(product.getQuality(), is(expectedQuality));
+  }
+
+  @Test
+  public void given_a_legendary_product_when_a_day_passes_then_its_quality_remains_80() {
+    Inventory inventory = new Inventory();
+    Product product = ProductSupplier.askForSulfuras(20);
+    Product otherSulfuras = ProductSupplier.askFor("Sulfuras", 20, 20);
+    inventory.addProduct(product);
+    inventory.addProduct(otherSulfuras);
+
+    inventory.updateQualities();
+
+    int expectedQuality = 80;
+    assertThat(product.getQuality(), is(expectedQuality));
+    assertThat(otherSulfuras.getQuality(), is(expectedQuality));
   }
 }
