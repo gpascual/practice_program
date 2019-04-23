@@ -12,7 +12,7 @@ public class Product {
     item = new Item(name, sellIn, initialQuality);
   }
 
-  public int getSellIn() {
+  public Integer getSellIn() {
     return item.sellIn;
   }
 

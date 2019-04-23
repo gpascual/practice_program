@@ -11,7 +11,7 @@ public class ProductSupplier {
       return new AgedBrie(AGED_BRIE_PRODUCT_NAME, sellIn, initialQuality);
     }
     if (Objects.equals(name, SULFURAS_PRODUCT_NAME)) {
-      return new Legendary(SULFURAS_PRODUCT_NAME, sellIn);
+      return new Legendary(SULFURAS_PRODUCT_NAME);
     }
 
     return new Product(name, sellIn, initialQuality);
@@ -21,7 +21,7 @@ public class ProductSupplier {
     return new AgedBrie(AGED_BRIE_PRODUCT_NAME, sellIn, initialQuality);
   }
 
-  public static Product askForSulfuras(int sellIn) {
-    return new Legendary(SULFURAS_PRODUCT_NAME, sellIn);
+  public static Product askForSulfuras() {
+    return new Legendary(SULFURAS_PRODUCT_NAME);
   }
 }

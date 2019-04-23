@@ -78,7 +78,7 @@ public class GildedRoseTest {
   @Test
   public void given_a_legendary_product_when_a_day_passes_then_its_quality_remains_80() {
     Inventory inventory = new Inventory();
-    Product product = askForSulfuras(20);
+    Product product = askForSulfuras();
     Product otherSulfuras = askFor("Sulfuras", 20, 20);
     inventory.addProduct(product);
     inventory.addProduct(otherSulfuras);
@@ -88,5 +88,17 @@ public class GildedRoseTest {
     int expectedQuality = 80;
     assertThat(product.getQuality(), is(expectedQuality));
     assertThat(otherSulfuras.getQuality(), is(expectedQuality));
+  }
+
+  @Test
+  public void given_a_legendary_product_when_a_day_passes_then_its_sell_in_is_null() {
+    Inventory inventory = new Inventory();
+    Product product = askForSulfuras();
+    inventory.addProduct(product);
+
+    inventory.updateProducts();
+
+    Integer expectedSellIn = null;
+    assertThat(product.getSellIn(), is(expectedSellIn));
   }
 }
