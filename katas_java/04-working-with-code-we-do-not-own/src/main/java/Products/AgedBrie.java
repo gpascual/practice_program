@@ -1,6 +1,6 @@
 package Products;
 
-public class AgedBrie extends Product {
+class AgedBrie extends Product {
   private static final int MAXIMUM_QUALITY = 50;
 
   AgedBrie(String name, int sellIn, int initialQuality) {
