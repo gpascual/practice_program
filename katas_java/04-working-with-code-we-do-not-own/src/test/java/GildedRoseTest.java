@@ -1,3 +1,4 @@
+import Products.ProductSupplier;
 import org.junit.Test;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
@@ -100,5 +101,23 @@ public class GildedRoseTest {
 
     Integer expectedSellIn = null;
     assertThat(product.getSellIn(), is(expectedSellIn));
+  }
+
+  @Test
+  public void given_backstage_passes_when_a_day_passes_then_its_quality_increases() {
+    Inventory inventory = new Inventory();
+    Product product = ProductSupplier.askForBackstagePasses(20, 20);
+    Product otherBackstagePasses = askFor("Backstage passes", 20, 20);
+    inventory.addProduct(product);
+    inventory.addProduct(otherBackstagePasses);
+
+    inventory.updateProducts();
+
+    int expectedSellIn = 19;
+    int expectedQuality = 21;
+    assertThat(product.getSellIn(), is(expectedSellIn));
+    assertThat(product.getQuality(), is(expectedQuality));
+    assertThat(otherBackstagePasses.getSellIn(), is(expectedSellIn));
+    assertThat(otherBackstagePasses.getQuality(), is(expectedQuality));
   }
 }
