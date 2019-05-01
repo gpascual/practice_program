@@ -53,8 +53,8 @@ public class GildedRoseTest {
 
     inventory.updateProducts();
 
-    assertThat(product.getSellIn(), is(expectedSellIn));
-    assertThat(product.getQuality(), is(expectedQuality));
+    assertThat(testDescription + "\n\nSellIn doesn't match\n", product.getSellIn(), is(expectedSellIn));
+    assertThat(testDescription + "\n\nQuality doesn't match\n", product.getQuality(), is(expectedQuality));
   }
 
   @Test
