@@ -3,9 +3,8 @@ package Products;
 public class Conjured extends Product {
   private RegularProduct conjuredProduct;
 
-  public Conjured(String conjured, int sellIn, int initialQuality) {
-    super(conjured, sellIn, initialQuality);
-    this.conjuredProduct = new RegularProduct(conjured, sellIn, initialQuality);
+  public Conjured(String name, int sellIn, int initialQuality) {
+    this.conjuredProduct = new RegularProduct(name, sellIn, initialQuality);
   }
 
   @Override

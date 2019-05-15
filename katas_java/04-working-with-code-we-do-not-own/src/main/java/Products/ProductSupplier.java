@@ -11,11 +11,11 @@ public class ProductSupplier {
   public static Product askFor(String name, int sellIn, int initialQuality) {
     switch (name) {
       case AGED_BRIE_PRODUCT_NAME:
-        return new AgedBrie(AGED_BRIE_PRODUCT_NAME, sellIn, initialQuality);
+        return new AgedBrie(sellIn, initialQuality);
       case SULFURAS_PRODUCT_NAME:
         return new Legendary(SULFURAS_PRODUCT_NAME);
       case BACKSTAGE_PASSES_PRODUCT_NAME:
-        return new BackstagePasses(BACKSTAGE_PASSES_PRODUCT_NAME, sellIn, initialQuality);
+        return new BackstagePasses(sellIn, initialQuality);
       case CONJURED_PRODUCT_NAME:
         return new Conjured(CONJURED_PRODUCT_NAME, sellIn, initialQuality);
       default:

@@ -2,17 +2,17 @@ package Products;
 
 public class RegularProduct extends Product {
   RegularProduct(String name, int sellIn, int initialQuality) {
-    super(name, sellIn, initialQuality);
+    initializeProduct(name, sellIn, initialQuality);
   }
 
   @Override
   public void updateQuality() {
-    if (item.sellIn < 0) {
-      item.quality -= 2;
+    if (getSellIn() < 0) {
+      decreaseQuality(2);
     } else {
-      --item.quality;
+      decreaseQuality(1);
     }
 
-    item.quality = Math.max(MINIMUM_QUALITY, item.quality);
+    applyMinimumQualityBoundary(getQuality(), MINIMUM_QUALITY);
   }
 }

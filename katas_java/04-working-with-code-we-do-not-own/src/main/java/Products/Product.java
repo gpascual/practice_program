@@ -6,20 +6,32 @@ import items.Item;
 abstract public class Product {
   static final int MINIMUM_QUALITY = 0;
 
-  final Item item;
+  private Item item;
 
-  Product(String name, int sellIn, int initialQuality) {
+  final void initializeProduct(String name, int sellIn, int initialQuality) {
     item = new Item(name, sellIn, initialQuality);
   }
 
   abstract public void updateQuality();
 
-  int applyMaximumQualityBoundary(int quality, int maximumQuality) {
-    return Math.min(maximumQuality, quality);
+  void applyMinimumQualityBoundary(int quality, int maximumQuality) {
+    item.quality = Math.max(maximumQuality, quality);
+  }
+
+  void applyMaximumQualityBoundary(int quality, int maximumQuality) {
+    item.quality = Math.min(maximumQuality, quality);
+  }
+
+  void removeRemainingQuality() {
+    item.quality = 0;
   }
 
   void increaseQuality(int increment) {
     item.quality += increment;
+  }
+
+  void decreaseQuality(int decrement) {
+    item.quality -= decrement;
   }
 
   public Integer getSellIn() {
