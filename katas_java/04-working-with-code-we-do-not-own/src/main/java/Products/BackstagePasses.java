@@ -3,8 +3,8 @@ package Products;
 class BackstagePasses extends Product {
   private static final int MAXIMUM_QUALITY = 50;
 
-  BackstagePasses(int sellIn, int initialQuality) {
-    initializeProduct("Backstage passes", sellIn, initialQuality);
+  BackstagePasses(String name, int sellIn, int initialQuality) {
+    initializeProduct(name, sellIn, initialQuality);
   }
 
   @Override
