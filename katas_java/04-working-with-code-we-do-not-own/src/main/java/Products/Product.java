@@ -3,13 +3,23 @@ package Products;
 import java.util.Objects;
 import items.Item;
 
-public class Product {
-  private static final int MINIMUM_QUALITY = 0;
+abstract public class Product {
+  static final int MINIMUM_QUALITY = 0;
 
-  protected final Item item;
+  final Item item;
 
   Product(String name, int sellIn, int initialQuality) {
     item = new Item(name, sellIn, initialQuality);
+  }
+
+  abstract public void updateQuality();
+
+  int applyMaximumQualityBoundary(int quality, int maximumQuality) {
+    return Math.min(maximumQuality, quality);
+  }
+
+  void increaseQuality(int increment) {
+    item.quality += increment;
   }
 
   public Integer getSellIn() {
@@ -22,16 +32,6 @@ public class Product {
 
   public void updateSellIn() {
     --item.sellIn;
-  }
-
-  public void updateQuality() {
-    if (item.sellIn < 0) {
-      item.quality -= 2;
-    } else {
-      --item.quality;
-    }
-
-    item.quality = Math.max(MINIMUM_QUALITY, item.quality);
   }
 
   @Override

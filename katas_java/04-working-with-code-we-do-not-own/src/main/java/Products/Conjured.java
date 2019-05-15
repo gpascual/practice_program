@@ -1,6 +1,6 @@
 package Products;
 
-public class Conjured extends Product {
+public class Conjured extends RegularProduct {
   public Conjured(String conjured, int sellIn, int initialQuality) {
     super(conjured, sellIn, initialQuality);
   }

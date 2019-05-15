@@ -1,6 +1,8 @@
 package Products;
 
-class BackstagePasses extends IncreasingQualityProduct {
+class BackstagePasses extends Product {
+  private static final int MAXIMUM_QUALITY = 50;
+
   BackstagePasses(String name, int sellIn, int initialQuality) {
     super(name, sellIn, initialQuality);
   }
@@ -9,17 +11,17 @@ class BackstagePasses extends IncreasingQualityProduct {
   public void updateQuality() {
     if (item.sellIn < 0) {
       item.quality = 0;
-      return;
     }
-    if (item.sellIn <= 5) {
+    else if (item.sellIn <= 5) {
       increaseQuality(3);
-      return;
     }
-    if (item.sellIn <= 10) {
+    else if (item.sellIn <= 10) {
       increaseQuality(2);
-      return;
+    }
+    else {
+      increaseQuality(1);
     }
 
-    super.updateQuality();
+    item.quality = applyMaximumQualityBoundary(item.quality, MAXIMUM_QUALITY);
   }
 }
