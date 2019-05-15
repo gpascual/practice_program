@@ -1,5 +1,7 @@
 package Products;
 
+import java.util.Objects;
+
 public class ProductSupplier {
   private static final String AGED_BRIE_PRODUCT_NAME = "Aged Brie";
   private static final String SULFURAS_PRODUCT_NAME = "Sulfuras";
@@ -21,19 +23,17 @@ public class ProductSupplier {
     }
   }
 
-  public static Product askForAgedBrie(int sellIn, int initialQuality) {
-    return new IncreasingQualityProduct(AGED_BRIE_PRODUCT_NAME, sellIn, initialQuality);
+  public static Product askFor(String name) throws MissingSellInAndQuality {
+    if (Objects.equals(name, SULFURAS_PRODUCT_NAME)) {
+      return new Legendary(name);
+    }
+
+    throw new MissingSellInAndQuality("Only legendary products don't need either sellIn or quality");
   }
 
-  public static Product askForSulfuras() {
-    return new Legendary(SULFURAS_PRODUCT_NAME);
-  }
-
-  public static Product askForBackstagePasses(int sellIn, int initialQuality) {
-    return new BackstagePasses(BACKSTAGE_PASSES_PRODUCT_NAME, sellIn, initialQuality);
-  }
-
-  public static Product askForConjured(int sellIn, int initialQuality) {
-    return new Conjured(CONJURED_PRODUCT_NAME, sellIn, initialQuality);
+  public static class MissingSellInAndQuality extends Throwable {
+    MissingSellInAndQuality(String message) {
+      super(message);
+    }
   }
 }
