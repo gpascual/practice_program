@@ -1,5 +1,7 @@
 package Products;
 
+import java.util.Objects;
+
 public class Conjured extends Product {
   private RegularProduct conjuredProduct;
 
@@ -26,5 +28,19 @@ public class Conjured extends Product {
   @Override
   public void updateSellIn() {
     conjuredProduct.updateSellIn();
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    if (!super.equals(o)) return false;
+    Conjured conjured = (Conjured) o;
+    return Objects.equals(conjuredProduct, conjured.conjuredProduct);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(super.hashCode(), conjuredProduct);
   }
 }
