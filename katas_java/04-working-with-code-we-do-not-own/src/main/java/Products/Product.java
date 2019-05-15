@@ -4,7 +4,8 @@ import java.util.Objects;
 import items.Item;
 
 abstract public class Product {
-  static final int MINIMUM_QUALITY = 0;
+  private static final int MINIMUM_QUALITY = 0;
+  private static final int MAXIMUM_QUALITY = 50;
 
   private Item item;
 
@@ -14,12 +15,12 @@ abstract public class Product {
 
   abstract public void updateQuality();
 
-  void applyMinimumQualityBoundary(int quality, int maximumQuality) {
-    item.quality = Math.max(maximumQuality, quality);
+  void applyMinimumQualityBoundary() {
+    item.quality = Math.max(Product.MINIMUM_QUALITY, item.quality);
   }
 
-  void applyMaximumQualityBoundary(int quality, int maximumQuality) {
-    item.quality = Math.min(maximumQuality, quality);
+  void applyMaximumQualityBoundary() {
+    item.quality = Math.min(MAXIMUM_QUALITY, item.quality);
   }
 
   void removeRemainingQuality() {
@@ -34,16 +35,16 @@ abstract public class Product {
     item.quality -= decrement;
   }
 
+  public void updateSellIn() {
+    --item.sellIn;
+  }
+
   public Integer getSellIn() {
     return item.sellIn;
   }
 
   public int getQuality() {
     return item.quality;
-  }
-
-  public void updateSellIn() {
-    --item.sellIn;
   }
 
   @Override

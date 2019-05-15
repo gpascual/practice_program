@@ -1,7 +1,6 @@
 package Products;
 
 class BackstagePasses extends Product {
-  private static final int MAXIMUM_QUALITY = 50;
 
   BackstagePasses(String name, int sellIn, int initialQuality) {
     initializeProduct(name, sellIn, initialQuality);
@@ -22,6 +21,6 @@ class BackstagePasses extends Product {
       increaseQuality(1);
     }
 
-    applyMaximumQualityBoundary(getQuality(), MAXIMUM_QUALITY);
+    applyMaximumQualityBoundary();
   }
 }

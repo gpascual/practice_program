@@ -13,6 +13,6 @@ public class RegularProduct extends Product {
       decreaseQuality(1);
     }
 
-    applyMinimumQualityBoundary(getQuality(), MINIMUM_QUALITY);
+    applyMinimumQualityBoundary();
   }
 }
