@@ -1,14 +1,14 @@
 package beverages;
 
 public class WithCream implements Beverage {
-  private final HotChocolate hotChocolate;
+  private final Beverage beverage;
 
-  public WithCream(HotChocolate hotChocolate) {
-    this.hotChocolate = hotChocolate;
+  public WithCream(Beverage beverage) {
+    this.beverage = beverage;
   }
 
   @Override
   public double price() {
-    return this.hotChocolate.price() + 0.15;
+    return this.beverage.price() + 0.15;
   }
 }
