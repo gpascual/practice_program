@@ -1,10 +1,10 @@
 package beverages;
 
 public class WithMilk implements Beverage {
-  private final Tea beverage;
+  private final Beverage beverage;
 
-  public WithMilk(Tea tea) {
-    this.beverage = tea;
+  public WithMilk(Beverage beverage) {
+    this.beverage = beverage;
   }
 
   @Override
