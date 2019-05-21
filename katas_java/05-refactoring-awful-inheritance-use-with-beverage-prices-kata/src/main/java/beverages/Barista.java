@@ -4,6 +4,7 @@ public class Barista {
   private Beverage beverage;
   private boolean hasMilk = false;
   private boolean hasCream = false;
+  private boolean hasCinnamon = false;
 
   public static Barista askForCoffee() {
     return new Barista().withCoffee();
@@ -42,6 +43,11 @@ public class Barista {
     return this;
   }
 
+  public Barista withCinnamon() {
+    hasCinnamon = true;
+    return this;
+  }
+
   public Beverage prepare() {
     if (hasMilk) {
       beverage = new WithMilk(beverage);
@@ -49,6 +55,10 @@ public class Barista {
 
     if (hasCream) {
       beverage = new WithCream(beverage);
+    }
+
+    if (hasCinnamon) {
+      beverage = new WithCinnamon(beverage);
     }
 
     return beverage;

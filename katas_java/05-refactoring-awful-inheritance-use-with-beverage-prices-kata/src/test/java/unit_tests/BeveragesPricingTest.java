@@ -35,6 +35,8 @@ public class BeveragesPricingTest {
                 { "coffee with milk", askForCoffee().withMilk().prepare(), 1.30},
                 { "coffee with milk and cream", askForCoffee().withMilk().withCream().prepare(), 1.45},
                 { "hot chocolate with cream", askForHotChocolate().withCream().prepare(), 1.60},
+                { "tea with cinnamon", askForTea().withCinnamon().prepare(), 1.55},
+                { "coffee with cream and cinnamon", askForCoffee().withCream().withCinnamon().prepare(), 1.40},
         };
     }
 }
