@@ -1,14 +1,13 @@
 package beverages;
 
-public class WithMilk implements Beverage {
-  private final Beverage beverage;
+public class WithMilk extends BeverageExtra {
 
   public WithMilk(Beverage beverage) {
-    this.beverage = beverage;
+    super(beverage);
   }
 
   @Override
-  public double price() {
-    return this.beverage.price() + 0.10;
+  protected double priceIncrement() {
+    return 0.10;
   }
 }
