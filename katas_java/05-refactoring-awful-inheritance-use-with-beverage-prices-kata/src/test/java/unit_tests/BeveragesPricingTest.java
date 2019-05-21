@@ -1,52 +1,37 @@
 package unit_tests;
 
 import beverages.*;
+import com.tngtech.java.junit.dataprovider.DataProvider;
+import com.tngtech.java.junit.dataprovider.DataProviderRunner;
+import com.tngtech.java.junit.dataprovider.UseDataProvider;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.closeTo;
 
+@RunWith(DataProviderRunner.class)
 public class BeveragesPricingTest {
-    @Test
-    public void computes_coffee_price() {
-        Beverage coffee = new Coffee();
-        assertThat(coffee.price(), is(closeTo(1.20, 0.001)));
-    }
+
+    private static final double ERROR = 0.001;
 
     @Test
-    public void computes_tea_price() {
-        Beverage tea = new Tea();
-        assertThat(tea.price(), is(closeTo(1.50, 0.001)));
+    @UseDataProvider("beveragePricesToCompute")
+    public void computes_beverage_price(String testName, Beverage beverage, double expectedPrice) {
+        assertThat(testName + " price went wrong", beverage.price(), is(closeTo(expectedPrice, ERROR)));
     }
 
-    @Test
-    public void computes_hot_chocolate_price() {
-        Beverage hotChocolate = new HotChocolate();
-        assertThat(hotChocolate.price(), is(closeTo(1.45, 0.001)));
-    }
-
-    @Test
-    public void computes_tea_with_milk_price() {
-        Beverage teaWithMilk = new WithMilk(new Tea());
-        assertThat(teaWithMilk.price(), is(closeTo(1.60, 0.001)));
-    }
-
-    @Test
-    public void computes_coffee_with_milk_price() {
-        Beverage coffeeWithMilk = new WithMilk(new Coffee());
-        assertThat(coffeeWithMilk.price(), is(closeTo(1.30, 0.001)));
-    }
-
-    @Test
-    public void computes_coffee_with_milk_and_cream_price() {
-        Beverage coffeeWithMilkAndCream = new WithCream(new WithMilk(new Coffee()));
-        assertThat(coffeeWithMilkAndCream.price(), is(closeTo(1.45, 0.001)));
-    }
-
-    @Test
-    public void computes_hot_chocolate_with_cream_price() {
-        Beverage hotChocolateWithCream = new WithCream(new HotChocolate());
-        assertThat(hotChocolateWithCream.price(),  is(closeTo(1.60, 0.001)));
+    @DataProvider(format = "%p[0] price is %p[2]")
+    public static Object[][] beveragePricesToCompute() {
+        return new Object[][] {
+                { "coffee", new Coffee(), 1.20},
+                { "tea", new Tea(), 1.50},
+                { "hot chocolate", new HotChocolate(), 1.45},
+                { "tea with milk", new WithMilk(new Tea()), 1.60},
+                { "coffee with milk", new WithMilk(new Coffee()), 1.30},
+                { "coffee with milk and cream", new WithCream(new WithMilk(new Coffee())), 1.45},
+                { "hot chocolate with cream", new WithCream(new HotChocolate()), 1.60},
+        };
     }
 }
