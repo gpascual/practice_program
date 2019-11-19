@@ -5,7 +5,16 @@ import java.util.Objects;
 
 public class Transaction {
     private final Date created;
+
     private final int amount;
+
+    public Date getCreated() {
+        return created;
+    }
+
+    public double getAmount() {
+        return Double.valueOf(amount);
+    }
 
     public Transaction(Date created, int amount) {
         this.created = created;
@@ -32,5 +41,9 @@ public class Transaction {
                 "created=" + created +
                 ", amount=" + amount +
                 '}';
+    }
+
+    public boolean isWithdrawal() {
+        return amount < 0;
     }
 }

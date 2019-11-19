@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class Statement {
-    List<Transaction> transactions;
+    public List<Transaction> transactions;
 
     public Statement(Transaction... transactions) {
         this.transactions = new ArrayList<>(Arrays.asList(transactions));

@@ -4,11 +4,11 @@ public class BankAccount {
     private Transactions transactions;
     private CCalendar calendar;
     private Display display;
-    private OutputPrinter outputPrinter;
+    private Printer printer;
 
-    public BankAccount(Transactions transactions, OutputPrinter outputPrinter) {
+    public BankAccount(Transactions transactions, Printer printer) {
         this.transactions = transactions;
-        this.outputPrinter = outputPrinter;
+        this.printer = printer;
     }
 
     public BankAccount(Transactions transactions, CCalendar calendar, Display display) {
@@ -26,6 +26,6 @@ public class BankAccount {
     }
 
     public void print() {
-        outputPrinter.print(transactions.generateStatement());
+        printer.print(transactions.generateStatement());
     }
 }

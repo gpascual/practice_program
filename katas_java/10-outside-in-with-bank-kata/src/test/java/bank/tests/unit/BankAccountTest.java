@@ -12,14 +12,14 @@ import static org.mockito.Mockito.*;
 public class BankAccountTest {
 
     private Transactions transactions;
-    private OutputPrinter outputPrinter;
+    private Printer printer;
     private BankAccount bankAccount;
 
     @Before
     public void setUp() {
         transactions = mock(Transactions.class);
-        outputPrinter = mock(OutputPrinter.class);
-        bankAccount = new BankAccount(transactions, outputPrinter);
+        printer = mock(Printer.class);
+        bankAccount = new BankAccount(transactions, printer);
     }
 
     @Test
@@ -51,6 +51,6 @@ public class BankAccountTest {
 
         bankAccount.print();
 
-        verify(outputPrinter).print(statement);
+        verify(printer).print(statement);
     }
 }
