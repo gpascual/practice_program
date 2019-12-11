@@ -9,6 +9,11 @@ public class Printer {
         this.display = display;
     }
 
+    public Printer(Display display) {
+        this.formatter = new Formatter();
+        this.display = display;
+    }
+
     public void print(Statement statement) {
         display.print(formatter.format(statement));
     }
