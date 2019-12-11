@@ -1,6 +1,8 @@
 package bank;
 
+import java.util.Date;
+
 public interface Transactions {
-    void register(int amount);
+    void register(Date today, int amount);
     Statement retrieveStatement();
 }

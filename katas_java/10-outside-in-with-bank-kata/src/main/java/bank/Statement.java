@@ -12,6 +12,10 @@ public class Statement {
         this.transactions = new ArrayList<>(Arrays.asList(transactions));
     }
 
+    public Statement(ArrayList<Transaction> transactions) {
+        this.transactions = transactions;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
