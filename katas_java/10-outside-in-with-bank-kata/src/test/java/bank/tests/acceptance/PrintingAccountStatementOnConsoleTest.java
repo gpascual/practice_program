@@ -22,6 +22,17 @@ public class PrintingAccountStatementOnConsoleTest {
         calendar = mock(CCalendar.class);
         display = mock(Display.class);
         bankAccount = new BankAccount(transactions, calendar, display);
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        Statement statement = new Statement(
+                new Transaction(dateFormat.parse("10-01-2012"), 1000),
+                new Transaction(dateFormat.parse("13-01-2012"), 2000),
+                new Transaction(dateFormat.parse("14-01-2012"), -500)
+        );
+        when(transactions.retrieveStatement()).thenReturn(
+                statement
+        );
+
     }
 
     @Test
@@ -47,10 +58,11 @@ public class PrintingAccountStatementOnConsoleTest {
         bankAccount.deposit(2000);
         bankAccount.withdrawal(500);
 
-        spy(display).print("date || credit || debit || balance\n");
-        spy(display).print("14/01/2012 || || 500.00 || 2500.00\n");
-        spy(display).print("13/01/2012 || 2000.00 || || 3000.00\n");
-        spy(display).print("10/01/2012 || 1000.00 || || 1000.00\n");
         bankAccount.print();
+
+        verify(display).print("date || credit || debit || balance\n" +
+                "14/01/2012 || || 500.00 || 2500.00\n" +
+                "13/01/2012 || 2000.00 || || 3000.00\n" +
+                "10/01/2012 || 1000.00 || || 1000.00\n");
     }
 }

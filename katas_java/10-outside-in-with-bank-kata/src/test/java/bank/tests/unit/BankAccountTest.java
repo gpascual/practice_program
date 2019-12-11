@@ -45,7 +45,7 @@ public class BankAccountTest {
                 new Transaction(dateFormat.parse("10-01-2012"), 500),
                 new Transaction(dateFormat.parse("11-01-2012"), -200)
         );
-        when(transactions.generateStatement()).thenReturn(
+        when(transactions.retrieveStatement()).thenReturn(
                 statement
         );
 

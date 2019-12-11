@@ -14,7 +14,7 @@ public class BankAccount {
     public BankAccount(Transactions transactions, CCalendar calendar, Display display) {
         this.transactions = transactions;
         this.calendar = calendar;
-        this.display = display;
+        this.printer = new Printer(display);
     }
 
     public void deposit(int amount) {
@@ -26,6 +26,6 @@ public class BankAccount {
     }
 
     public void print() {
-        printer.print(transactions.generateStatement());
+        printer.print(transactions.retrieveStatement());
     }
 }
