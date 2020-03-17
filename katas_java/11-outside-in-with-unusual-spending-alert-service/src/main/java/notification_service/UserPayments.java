@@ -1,14 +1,14 @@
 package notification_service;
 
-import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class UserPayments {
 
-  private final ArrayList<Payment> payments;
+  private final List<Payment> payments;
 
-  public UserPayments(ArrayList<Payment> payments) {
+  public UserPayments(List<Payment> payments) {
 
     this.payments = payments;
   }

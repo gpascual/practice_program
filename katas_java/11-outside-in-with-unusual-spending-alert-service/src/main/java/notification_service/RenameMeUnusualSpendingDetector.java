@@ -28,8 +28,12 @@ public class RenameMeUnusualSpendingDetector implements UnusualSpendingsDetector
       return unusualSpendings;
     }
 
-    if (currentMonthSpendings.get("entertainment") >= 1.5*previousMonthSpendings.get("entertainment") ) {
-      unusualSpendings.addUnusualSpending(new UnusualSpending("entertainment", currentMonthSpendings.get("entertainment")));
+    for (Map.Entry<String, Integer> entry : currentMonthSpendings.entrySet()) {
+      String category = entry.getKey();
+      Integer currentSpending = entry.getValue();
+      if (previousMonthSpendings.containsKey(category) && currentSpending >= 1.5 * previousMonthSpendings.get(category)) {
+        unusualSpendings.addUnusualSpending(new UnusualSpending(category, currentSpending));
+      }
     }
 
     return unusualSpendings;

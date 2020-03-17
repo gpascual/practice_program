@@ -1,15 +1,14 @@
 package notification_service;
 
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 
 public class UnusualSpendings {
 
   private int userId;
-  private ArrayList<UnusualSpending> unusualSpendings;
+  private List<UnusualSpending> unusualSpendings;
 
-  public UnusualSpendings(int userId, ArrayList<UnusualSpending> unusualSpendings)
+  public UnusualSpendings(int userId, List<UnusualSpending> unusualSpendings)
   {
     this.userId = userId;
     this.unusualSpendings = unusualSpendings;
