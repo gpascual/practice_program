@@ -2,18 +2,12 @@ package notification_service;
 
 public class UnusualSpendingsNotifier {
 
-  private DateProvider dateProvider;
-  private Payments payments;
-  private NotificationSender notificationSender;
-  private Users users;
   private UnusualSpendingsDetector detector;
   private UsersNotifier notifier;
 
   public UnusualSpendingsNotifier(DateProvider dateProvider, Payments payments, NotificationSender notificationSender, Users users) {
-    this.dateProvider = dateProvider;
-    this.payments = payments;
-    this.notificationSender = notificationSender;
-    this.users = users;
+    this.detector = new RenameMeUnusualSpendingDetector(dateProvider, payments);
+    this.notifier = new UsersNotifier(users, notificationSender);
   }
 
   public UnusualSpendingsNotifier(UnusualSpendingsDetector detector, UsersNotifier notifier) {

@@ -44,4 +44,12 @@ public class Month {
   public int hashCode() {
     return Objects.hash(month, year);
   }
+
+  @Override
+  public String toString() {
+    return "Month{" +
+           "month=" + month +
+           ", year=" + year +
+           '}';
+  }
 }

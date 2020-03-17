@@ -1,5 +1,6 @@
 package notification_service;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 
@@ -12,6 +13,10 @@ public class UnusualSpendings {
   {
     this.userId = userId;
     this.unusualSpendings = unusualSpendings;
+  }
+
+  public int getUserId() {
+    return userId;
   }
 
   public void addUnusualSpending(UnusualSpending unusualSpending) {
@@ -46,5 +51,9 @@ public class UnusualSpendings {
 
   public boolean hasUnusualSpendings() {
     return unusualSpendings.size() > 0;
+  }
+
+  public Iterator<UnusualSpending> iterate() {
+    return this.unusualSpendings.iterator();
   }
 }

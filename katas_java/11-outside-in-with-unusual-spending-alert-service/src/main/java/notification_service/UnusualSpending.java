@@ -12,6 +12,14 @@ public class UnusualSpending {
     this.amount = amount;
   }
 
+  public String getCategory() {
+    return category;
+  }
+
+  public int getAmount() {
+    return amount;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
