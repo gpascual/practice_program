@@ -1,6 +1,40 @@
 package notification_service;
 
-public interface UnusualSpendingsDetector {
+import java.util.ArrayList;
+import java.util.Map;
 
-  UnusualSpendings detectUnusualSpendings(int userId);
+public class UnusualSpendingsDetector {
+
+  private final DateProvider dateProvider;
+  private final Payments payments;
+
+  public UnusualSpendingsDetector(DateProvider dateProvider, Payments payments) { this.dateProvider = dateProvider;
+    this.payments = payments;
+  }
+
+  public UnusualSpendings detectUnusualSpendings(int userId) {
+    UnusualSpendings unusualSpendings = new UnusualSpendings(userId, new ArrayList<>());
+
+    Month currentMonth = dateProvider.getCurrentMonth();
+    Month previousMonth = currentMonth.previousMonth();
+    UserPayments currentMonthPayments = payments.getForUserAndDate(userId, currentMonth);
+    UserPayments previousMonthPayments = payments.getForUserAndDate(userId, previousMonth);
+
+    Map<String, Integer> currentMonthSpendings = currentMonthPayments.groupByCategory();
+    Map<String, Integer> previousMonthSpendings = previousMonthPayments.groupByCategory();
+
+    if (currentMonthSpendings.isEmpty() || previousMonthSpendings.isEmpty()) {
+      return unusualSpendings;
+    }
+
+    for (Map.Entry<String, Integer> entry : currentMonthSpendings.entrySet()) {
+      String category = entry.getKey();
+      Integer currentSpending = entry.getValue();
+      if (previousMonthSpendings.containsKey(category) && currentSpending >= 1.5 * previousMonthSpendings.get(category)) {
+        unusualSpendings.addUnusualSpending(new UnusualSpending(category, currentSpending));
+      }
+    }
+
+    return unusualSpendings;
+  }
 }

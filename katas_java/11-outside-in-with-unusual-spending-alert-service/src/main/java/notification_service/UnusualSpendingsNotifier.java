@@ -6,7 +6,7 @@ public class UnusualSpendingsNotifier {
   private UsersNotifier notifier;
 
   public UnusualSpendingsNotifier(DateProvider dateProvider, Payments payments, NotificationSender notificationSender, Users users) {
-    this.detector = new RenameMeUnusualSpendingDetector(dateProvider, payments);
+    this.detector = new UnusualSpendingsDetector(dateProvider, payments);
     this.notifier = new UsersNotifier(users, notificationSender);
   }
 
