@@ -14,6 +14,10 @@ public class UsersNotifier {
   }
 
   public void notifyUser(UnusualSpendings unusualSpendings) {
+    if (unusualSpendings.isEmpty()) {
+      return;
+    }
+
     User user = users.getUser(unusualSpendings.getUserId());
 
     String list = "";

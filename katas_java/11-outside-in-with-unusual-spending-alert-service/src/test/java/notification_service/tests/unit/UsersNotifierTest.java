@@ -2,7 +2,9 @@ package notification_service.tests.unit;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
+import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -71,6 +73,15 @@ public class UsersNotifierTest {
 
   @Test
   public void does_not_notify_user_if_no_unusual_spending_are_made() {
-    assertThat(false, is(true));
+    Users users = mock(Users.class);
+    NotificationSender notificationSender = mock(NotificationSender.class);
+    UsersNotifier usersNotifier = new UsersNotifier(users, notificationSender);
+    User user = new User(1, "pacheco@adevinta.es");
+    when(users.getUser(1)).thenReturn(user);
+    UnusualSpendings unusualSpendings = new UnusualSpendings(1, Collections.emptyList());
+
+    usersNotifier.notifyUser(unusualSpendings);
+
+    verify(notificationSender, never()).send(any());
   }
 }

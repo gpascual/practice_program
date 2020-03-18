@@ -56,4 +56,8 @@ public class UnusualSpendings {
   public Iterator<UnusualSpending> iterate() {
     return this.unusualSpendings.iterator();
   }
+
+  public boolean isEmpty() {
+    return unusualSpendings.isEmpty();
+  }
 }
