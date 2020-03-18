@@ -8,18 +8,15 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import org.hamcrest.core.Is;
-import org.junit.Ignore;
 import org.junit.Test;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 
 import notification_service.Notification;
 import notification_service.NotificationSender;
+import notification_service.SpendingDelta;
 import notification_service.UnusualSpending;
-import notification_service.UnusualSpendings;
 import notification_service.User;
 import notification_service.Users;
 import notification_service.UsersNotifier;
@@ -32,11 +29,11 @@ public class UsersNotifierTest {
     UsersNotifier usersNotifier = new UsersNotifier(users, notificationSender);
     User user = new User(1, "pacheco@adevinta.es");
     when(users.getUser(1)).thenReturn(user);
-    UnusualSpendings unusualSpendings = new UnusualSpendings(1, Collections.singletonList(
-        new UnusualSpending("groceries", 405)
+    UnusualSpending unusualSpending = new UnusualSpending(1, Collections.singletonList(
+        new SpendingDelta("groceries", 202, 405)
     ));
 
-    usersNotifier.notifyUser(unusualSpendings);
+    usersNotifier.notifyUser(unusualSpending);
 
     verify(notificationSender).send(new Notification(user,
         "Hello card user!\n\n"
@@ -54,12 +51,12 @@ public class UsersNotifierTest {
     UsersNotifier usersNotifier = new UsersNotifier(users, notificationSender);
     User user = new User(1, "pacheco@adevinta.es");
     when(users.getUser(1)).thenReturn(user);
-    UnusualSpendings unusualSpendings = new UnusualSpendings(1, Arrays.asList(
-        new UnusualSpending("groceries", 148),
-        new UnusualSpending("travel", 928)
+    UnusualSpending unusualSpending = new UnusualSpending(1, Arrays.asList(
+        new SpendingDelta("groceries", 74, 148),
+        new SpendingDelta("travel", 464, 928)
     ));
 
-    usersNotifier.notifyUser(unusualSpendings);
+    usersNotifier.notifyUser(unusualSpending);
 
     verify(notificationSender).send(new Notification(user,
         "Hello card user!\n\n"
@@ -78,9 +75,9 @@ public class UsersNotifierTest {
     UsersNotifier usersNotifier = new UsersNotifier(users, notificationSender);
     User user = new User(1, "pacheco@adevinta.es");
     when(users.getUser(1)).thenReturn(user);
-    UnusualSpendings unusualSpendings = new UnusualSpendings(1, Collections.emptyList());
+    UnusualSpending unusualSpending = new UnusualSpending(1, Collections.emptyList());
 
-    usersNotifier.notifyUser(unusualSpendings);
+    usersNotifier.notifyUser(unusualSpending);
 
     verify(notificationSender, never()).send(any());
   }

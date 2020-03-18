@@ -16,15 +16,15 @@ import notification_service.DateProvider;
 import notification_service.Month;
 import notification_service.Payment;
 import notification_service.Payments;
-import notification_service.UnusualSpendingsDetector;
+import notification_service.UnusualSpendingDetector;
+import notification_service.SpendingDelta;
 import notification_service.UnusualSpending;
-import notification_service.UnusualSpendings;
 import notification_service.UserPayments;
 
-public class UnusualSpendingsDetectorTest {
+public class UnusualSpendingDetectorTest {
 
   @Test
-  public void when_there_are_no_current_payments_there_are_no_unusual_spendings() {
+  public void when_there_are_no_current_payments_there_are_no_unusual_spending() {
     Payments payments = mock(Payments.class);
     DateProvider dateProvider = mock(DateProvider.class);
     Month currentMonth = new Month(5, 1945);
@@ -33,16 +33,16 @@ public class UnusualSpendingsDetectorTest {
     when(dateProvider.getCurrentMonth()).thenReturn(currentMonth);
     when(payments.getForUserAndDate(userId, currentMonth)).thenReturn(new UserPayments(new ArrayList<>()));
     when(payments.getForUserAndDate(userId, previousMonth)).thenReturn(new UserPayments(previousMonthManyPayments()));
-    UnusualSpendingsDetector detector = new UnusualSpendingsDetector(dateProvider, payments);
-    UnusualSpendings expectedUnusualSpendings = new UnusualSpendings(userId, new ArrayList<>());
+    UnusualSpendingDetector detector = new UnusualSpendingDetector(dateProvider, payments);
+    UnusualSpending expectedUnusualSpending = new UnusualSpending(userId, new ArrayList<>());
 
-    UnusualSpendings unusualSpendings = detector.detectUnusualSpendings(userId);
+    UnusualSpending unusualSpending = detector.detectUnusualSpending(userId);
 
-    assertThat(unusualSpendings, is(expectedUnusualSpendings));
+    assertThat(unusualSpending, is(expectedUnusualSpending));
   }
 
   @Test
-  public void when_there_are_no_previous_payments_there_are_no_unusual_spendings() {
+  public void when_there_are_no_previous_payments_there_are_no_unusual_spending() {
     Payments payments = mock(Payments.class);
     DateProvider dateProvider = mock(DateProvider.class);
     Month currentMonth = new Month(5, 1945);
@@ -51,12 +51,12 @@ public class UnusualSpendingsDetectorTest {
     when(dateProvider.getCurrentMonth()).thenReturn(currentMonth);
     when(payments.getForUserAndDate(userId, currentMonth)).thenReturn(new UserPayments(currentMonthManyPayments()));
     when(payments.getForUserAndDate(userId, previousMonth)).thenReturn(new UserPayments(new ArrayList<>()));
-    UnusualSpendingsDetector detector = new UnusualSpendingsDetector(dateProvider, payments);
-    UnusualSpendings expectedUnusualSpendings = new UnusualSpendings(userId, new ArrayList<>());
+    UnusualSpendingDetector detector = new UnusualSpendingDetector(dateProvider, payments);
+    UnusualSpending expectedUnusualSpending = new UnusualSpending(userId, new ArrayList<>());
 
-    UnusualSpendings unusualSpendings = detector.detectUnusualSpendings(userId);
+    UnusualSpending unusualSpending = detector.detectUnusualSpending(userId);
 
-    assertThat(unusualSpendings, is(expectedUnusualSpendings));
+    assertThat(unusualSpending, is(expectedUnusualSpending));
   }
 
   @Test
@@ -69,13 +69,13 @@ public class UnusualSpendingsDetectorTest {
     when(dateProvider.getCurrentMonth()).thenReturn(currentMonth);
     when(payments.getForUserAndDate(userId, currentMonth)).thenReturn(new UserPayments(currentMonthManyPayments()));
     when(payments.getForUserAndDate(userId, previousMonth)).thenReturn(new UserPayments(previousMonthManyPayments()));
-    UnusualSpendingsDetector detector = new UnusualSpendingsDetector(dateProvider, payments);
-    UnusualSpendings expectedUnusualSpendings;
-    expectedUnusualSpendings = new UnusualSpendings(userId, Collections.singletonList(new UnusualSpending("groceries", 150)));
+    UnusualSpendingDetector detector = new UnusualSpendingDetector(dateProvider, payments);
+    UnusualSpending expectedUnusualSpending;
+    expectedUnusualSpending = new UnusualSpending(userId, Collections.singletonList(new SpendingDelta("groceries", 100, 150)));
 
-    UnusualSpendings unusualSpendings = detector.detectUnusualSpendings(userId);
+    UnusualSpending unusualSpending = detector.detectUnusualSpending(userId);
 
-    assertThat(unusualSpendings, is(expectedUnusualSpendings));
+    assertThat(unusualSpending, is(expectedUnusualSpending));
   }
 
   private List<Payment> currentMonthManyPayments() {

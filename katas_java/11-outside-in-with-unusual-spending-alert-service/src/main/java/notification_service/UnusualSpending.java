@@ -1,23 +1,26 @@
 package notification_service;
 
+import java.util.Iterator;
+import java.util.List;
 import java.util.Objects;
 
 public class UnusualSpending {
 
-  private final String category;
-  private final int amount;
+  private int userId;
+  private List<SpendingDelta> spendingDeltas;
 
-  public UnusualSpending(String category, int amount) {
-    this.category = category;
-    this.amount = amount;
+  public UnusualSpending(int userId, List<SpendingDelta> spendingDeltas)
+  {
+    this.userId = userId;
+    this.spendingDeltas = spendingDeltas;
   }
 
-  public String getCategory() {
-    return category;
+  public int getUserId() {
+    return userId;
   }
 
-  public int getAmount() {
-    return amount;
+  public void addUnusualSpending(SpendingDelta spendingDelta) {
+    spendingDeltas.add(spendingDelta);
   }
 
   @Override
@@ -29,20 +32,32 @@ public class UnusualSpending {
       return false;
     }
     UnusualSpending that = (UnusualSpending) o;
-    return amount == that.amount &&
-           Objects.equals(category, that.category);
+    return userId == that.userId &&
+           Objects.equals(spendingDeltas, that.spendingDeltas);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(category, amount);
+    return Objects.hash(userId, spendingDeltas);
   }
 
   @Override
   public String toString() {
     return "UnusualSpending{" +
-           "category='" + category + '\'' +
-           ", amount=" + amount +
+           "userId=" + userId +
+           ", spendingDeltas=" + spendingDeltas +
            '}';
+  }
+
+  public boolean hasUnusualSpending() {
+    return spendingDeltas.size() > 0;
+  }
+
+  public Iterator<SpendingDelta> iterate() {
+    return this.spendingDeltas.iterator();
+  }
+
+  public boolean isEmpty() {
+    return spendingDeltas.isEmpty();
   }
 }

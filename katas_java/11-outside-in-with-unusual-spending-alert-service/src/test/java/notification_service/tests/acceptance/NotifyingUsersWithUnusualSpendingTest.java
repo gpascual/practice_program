@@ -15,14 +15,14 @@ import notification_service.Notification;
 import notification_service.NotificationSender;
 import notification_service.Payment;
 import notification_service.Payments;
-import notification_service.UnusualSpendingsNotifier;
+import notification_service.UnusualSpendingNotifier;
 import notification_service.User;
 import notification_service.UserPayments;
 import notification_service.Users;
 
-public class NotifyingUsersWithUnusualSpendingsTest {
+public class NotifyingUsersWithUnusualSpendingTest {
     @Test
-    public void notifying_users_with_unusual_spendings_in_some_categories() {
+    public void notifying_users_with_unusual_spending_in_some_categories() {
         DateProvider dateProvider = mock(DateProvider.class);
         Payments payments = mock(Payments.class);
         Users users = mock(Users.class);
@@ -31,7 +31,7 @@ public class NotifyingUsersWithUnusualSpendingsTest {
         String userMail = "user@mail.com";
         User user = new User(userId, userMail);
         Notification notification = new Notification(user, notificationContent());
-        UnusualSpendingsNotifier unusualSpendingsNotifier = new UnusualSpendingsNotifier(dateProvider, payments, notificationService, users);
+        UnusualSpendingNotifier unusualSpendingNotifier = new UnusualSpendingNotifier(dateProvider, payments, notificationService, users);
         Month currentMonth = new Month(12, 1975);
         Month previousMonth = new Month(11, 1975);
 
@@ -40,7 +40,7 @@ public class NotifyingUsersWithUnusualSpendingsTest {
         when(payments.getForUserAndDate(userId, previousMonth)).thenReturn(getPreviousMonthUserPayments());
         when(dateProvider.getCurrentMonth()).thenReturn(currentMonth);
 
-        unusualSpendingsNotifier.notify(userId);
+        unusualSpendingNotifier.notify(userId);
 
         verify(notificationService).send(notification);
     }

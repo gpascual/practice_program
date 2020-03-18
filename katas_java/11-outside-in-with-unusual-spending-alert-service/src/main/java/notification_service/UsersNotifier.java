@@ -13,17 +13,17 @@ public class UsersNotifier {
     this.notificationSender = notificationSender;
   }
 
-  public void notifyUser(UnusualSpendings unusualSpendings) {
-    if (unusualSpendings.isEmpty()) {
+  public void notifyUser(UnusualSpending unusualSpending) {
+    if (unusualSpending.isEmpty()) {
       return;
     }
 
-    User user = users.getUser(unusualSpendings.getUserId());
+    User user = users.getUser(unusualSpending.getUserId());
 
     String list = "";
-    for (Iterator<UnusualSpending> it = unusualSpendings.iterate(); it.hasNext(); ) {
-      UnusualSpending unusualSpending = it.next();
-      list = list.concat(String.format("* You spent $%s on %s\n", unusualSpending.getAmount(), unusualSpending.getCategory()));
+    for (Iterator<SpendingDelta> it = unusualSpending.iterate(); it.hasNext(); ) {
+      SpendingDelta spendingDelta = it.next();
+      list = list.concat(String.format("* You spent $%s on %s\n", spendingDelta.getAmount(), spendingDelta.getCategory()));
     }
     notificationSender.send(new Notification(user,
         "Hello card user!\n\n"
