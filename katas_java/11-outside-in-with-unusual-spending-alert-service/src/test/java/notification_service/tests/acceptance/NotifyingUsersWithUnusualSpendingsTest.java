@@ -7,6 +7,8 @@ import static org.mockito.Mockito.when;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import notification_service.DateProvider;
 import notification_service.Month;
@@ -45,27 +47,29 @@ public class NotifyingUsersWithUnusualSpendingsTest {
     }
 
     private UserPayments getPreviousMonthUserPayments() {
-        ArrayList<Payment> payments = new ArrayList<>();
-        payments.add(new Payment(100, "pay", "groceries"));
-        payments.add(new Payment(400, "pay2", "travel"));
-        payments.add(new Payment(200, "pay3", "entertainment"));
+        List<Payment> payments = Arrays.asList(
+            new Payment(100, "pay", "groceries"),
+            new Payment(400, "pay2", "travel"),
+            new Payment(200, "pay3", "entertainment")
+        );
         return new UserPayments(payments);
     }
 
     private UserPayments getCurrentMonthUserPayments() {
-        ArrayList<Payment> payments = new ArrayList<>();
-        payments.add(new Payment(150, "pay", "groceries"));
-        payments.add(new Payment(600, "pay2", "travel"));
-        payments.add(new Payment(299, "pay3", "entertainment"));
+        List<Payment> payments = Arrays.asList(
+            new Payment(150, "pay", "groceries"),
+            new Payment(600, "pay2", "travel"),
+            new Payment(299, "pay3", "entertainment")
+        );
         return new UserPayments(payments);
     }
 
     private String notificationContent() {
-        return "Hello card user!\n" +
-                                                           "We have detected unusually high spending on your card in these categories:\n" +
+        return "Hello card user!\n\n" +
+                                                           "We have detected unusually high spending on your card in these categories:\n\n" +
                                                            "* You spent $150 on groceries\n" +
-                                                           "* You spent $600 on travel\n" +
-                                                           "Love,\n" +
+                                                           "* You spent $600 on travel\n\n" +
+                                                           "Love,\n\n" +
                                                            "The Credit Card Company\n";
     }
 }

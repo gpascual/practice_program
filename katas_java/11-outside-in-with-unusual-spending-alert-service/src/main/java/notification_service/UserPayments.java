@@ -1,6 +1,6 @@
 package notification_service;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -14,7 +14,7 @@ public class UserPayments {
   }
 
   public Map<String, Integer> groupByCategory() {
-    Map<String, Integer> groupedSpending = new HashMap<>();
+    Map<String, Integer> groupedSpending = new LinkedHashMap<>();
 
     for (Payment payment: payments) {
       groupedSpending.put(
