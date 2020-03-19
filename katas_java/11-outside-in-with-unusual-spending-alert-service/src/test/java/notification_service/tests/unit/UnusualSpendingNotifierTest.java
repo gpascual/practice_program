@@ -9,12 +9,12 @@ import static org.mockito.Mockito.when;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import notification_service.SpendingDelta;
 import notification_service.UnusualSpending;
 import notification_service.UnusualSpendingDetector;
 import notification_service.UnusualSpendingNotifier;
-import notification_service.UserPayments;
 import notification_service.UsersNotifier;
 
 public class UnusualSpendingNotifierTest {
@@ -47,9 +47,7 @@ public class UnusualSpendingNotifierTest {
   }
 
   private UnusualSpending unusualEntertainmentSpending(int userId) {
-    UnusualSpending unusualSpending = new UnusualSpending(userId, new ArrayList<>());
-    unusualSpending.addUnusualSpending(new SpendingDelta("entertainment", 250, 500));
 
-    return unusualSpending;
+    return new UnusualSpending(userId, Collections.singletonList(new SpendingDelta("entertainment", 250, 500)));
   }
 }

@@ -19,8 +19,16 @@ public class UnusualSpending {
     return userId;
   }
 
-  public void addUnusualSpending(SpendingDelta spendingDelta) {
-    spendingDeltas.add(spendingDelta);
+  public boolean hasUnusualSpending() {
+    return spendingDeltas.size() > 0;
+  }
+
+  public boolean isEmpty() {
+    return spendingDeltas.isEmpty();
+  }
+
+  public Iterator<SpendingDelta> iterate() {
+    return this.spendingDeltas.iterator();
   }
 
   @Override
@@ -47,17 +55,5 @@ public class UnusualSpending {
            "userId=" + userId +
            ", spendingDeltas=" + spendingDeltas +
            '}';
-  }
-
-  public boolean hasUnusualSpending() {
-    return spendingDeltas.size() > 0;
-  }
-
-  public Iterator<SpendingDelta> iterate() {
-    return this.spendingDeltas.iterator();
-  }
-
-  public boolean isEmpty() {
-    return spendingDeltas.isEmpty();
   }
 }
