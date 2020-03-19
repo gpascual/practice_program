@@ -21,10 +21,8 @@ public class UnusualSpendingNotifier {
 
     UnusualSpending unusualSpending = detector.detectUnusualSpending(userId);
 
-    if(!unusualSpending.hasUnusualSpending()) {
-      return;
+    if(unusualSpending.hasUnusualSpending()) {
+      this.notifier.notifyUser(unusualSpending);
     }
-
-    this.notifier.notifyUser(unusualSpending);
   }
 }

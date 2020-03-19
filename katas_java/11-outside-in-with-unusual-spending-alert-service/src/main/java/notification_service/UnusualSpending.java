@@ -23,10 +23,6 @@ public class UnusualSpending {
     return spendingDeltas.size() > 0;
   }
 
-  public boolean isEmpty() {
-    return spendingDeltas.isEmpty();
-  }
-
   public Iterator<SpendingDelta> iterate() {
     return this.spendingDeltas.iterator();
   }

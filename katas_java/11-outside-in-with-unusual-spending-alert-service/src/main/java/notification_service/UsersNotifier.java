@@ -14,7 +14,7 @@ public class UsersNotifier {
   }
 
   public void notifyUser(UnusualSpending unusualSpending) {
-    if (unusualSpending.isEmpty()) {
+    if (!unusualSpending.hasUnusualSpending()) {
       return;
     }
 
