@@ -10,7 +10,6 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.List;
 
 import notification_service.DateProvider;
 import notification_service.Month;
@@ -31,8 +30,8 @@ public class UnusualSpendingDetectorTest {
     Month previousMonth = new Month(4, 1945);
     int userId = 67;
     when(dateProvider.getCurrentMonth()).thenReturn(currentMonth);
-    when(payments.getForUserAndDate(userId, currentMonth)).thenReturn(new UserPayments(new ArrayList<>()));
-    when(payments.getForUserAndDate(userId, previousMonth)).thenReturn(new UserPayments(previousMonthManyPayments()));
+    when(payments.getForUserAndDate(userId, currentMonth)).thenReturn(emptyUserPayments());
+    when(payments.getForUserAndDate(userId, previousMonth)).thenReturn(previousMonthManyPayments());
     UnusualSpendingDetector detector = new UnusualSpendingDetector(dateProvider, payments);
     UnusualSpending expectedUnusualSpending = new UnusualSpending(userId, new ArrayList<>());
 
@@ -49,8 +48,8 @@ public class UnusualSpendingDetectorTest {
     Month previousMonth = new Month(4, 1945);
     int userId = 67;
     when(dateProvider.getCurrentMonth()).thenReturn(currentMonth);
-    when(payments.getForUserAndDate(userId, currentMonth)).thenReturn(new UserPayments(currentMonthManyPayments()));
-    when(payments.getForUserAndDate(userId, previousMonth)).thenReturn(new UserPayments(new ArrayList<>()));
+    when(payments.getForUserAndDate(userId, currentMonth)).thenReturn(currentMonthManyPayments());
+    when(payments.getForUserAndDate(userId, previousMonth)).thenReturn(emptyUserPayments());
     UnusualSpendingDetector detector = new UnusualSpendingDetector(dateProvider, payments);
     UnusualSpending expectedUnusualSpending = new UnusualSpending(userId, new ArrayList<>());
 
@@ -67,8 +66,8 @@ public class UnusualSpendingDetectorTest {
     Month previousMonth = new Month(4, 1945);
     int userId = 67;
     when(dateProvider.getCurrentMonth()).thenReturn(currentMonth);
-    when(payments.getForUserAndDate(userId, currentMonth)).thenReturn(new UserPayments(currentMonthManyPayments()));
-    when(payments.getForUserAndDate(userId, previousMonth)).thenReturn(new UserPayments(previousMonthManyPayments()));
+    when(payments.getForUserAndDate(userId, currentMonth)).thenReturn(currentMonthManyPayments());
+    when(payments.getForUserAndDate(userId, previousMonth)).thenReturn(previousMonthManyPayments());
     UnusualSpendingDetector detector = new UnusualSpendingDetector(dateProvider, payments);
     UnusualSpending expectedUnusualSpending;
     expectedUnusualSpending = new UnusualSpending(userId, Collections.singletonList(new SpendingDelta("groceries", 100, 150)));
@@ -78,20 +77,24 @@ public class UnusualSpendingDetectorTest {
     assertThat(unusualSpending, is(expectedUnusualSpending));
   }
 
-  private List<Payment> currentMonthManyPayments() {
-    return Arrays.asList(
+  private UserPayments emptyUserPayments() {
+    return new UserPayments(new ArrayList<>());
+  }
+
+  private UserPayments previousMonthManyPayments() {
+    return new UserPayments(Arrays.asList(
+        new Payment(100, "beer", "groceries"),
+        new Payment(10, "Netflix subscription", "entertainment")
+    ));
+  }
+
+  private UserPayments currentMonthManyPayments() {
+    return new UserPayments(Arrays.asList(
         new Payment(135, "toilet paper", "groceries"),
         new Payment(15, "condoms", "groceries"),
         new Payment(14, "Netflix subscription", "entertainment"),
         new Payment(350, "Beretta", "armory")
-    );
-  }
-
-  private List<Payment> previousMonthManyPayments() {
-    return Arrays.asList(
-        new Payment(100, "beer", "groceries"),
-        new Payment(10, "Netflix subscription", "entertainment")
-    );
+    ));
   }
 
 }
